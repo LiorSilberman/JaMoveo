@@ -10,23 +10,23 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault();  // Prevent page reload on form submission
+        e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/login', {
+            const response = await axios.post('http://192.168.1.102:5000/login', {
                 username: username,
                 password: password
             });
-
-            if (response.data === 'login successful') {
-                // Store user information or token in localStorage
-                localStorage.setItem('user', JSON.stringify({ username: username }));
-
-                // Redirect to homepage
+            console.log(response.data);
+            if (response.data['message'] === 'login successful') {
+                localStorage.setItem('user', JSON.stringify({
+                    username: response.data.username,
+                    role: response.data.role
+                }));
                 navigate('/', { state: { id: username } });
-            } else if (response.data === 'incorrect password') {
+            } else if (response.data['message'] === 'incorrect password') {
                 setErrorMessage('Incorrect password, please try again.');
-            } else if (response.data === 'user not found') {
+            } else if (response.data['message'] === 'user not found') {
                 setErrorMessage('User not found. Please check your username.');
             }
         } catch (error) {

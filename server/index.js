@@ -46,6 +46,13 @@ app.get("/", (req, res)=>{
 });
 
 
+/**
+ * Handles POST requests to the /login endpoint.
+ * This route accepts a username and password in the request body,
+ * checks them against the database, and responds with a message indicating
+ * the success or failure of the login attempt. It also returns the user's username
+ * and role if the login is successful.
+ */
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -68,6 +75,13 @@ app.post("/login", async (req, res) => {
     }
 });
 
+
+/**
+ * Handles POST requests to the /signup endpoint.
+ * Accepts username, password, and instrument in the request body. It checks if the username already exists,
+ * hashes the password, and stores the new user data in the database. Responds with a status message indicating
+ * whether the user was successfully created or if they already exist.
+ */
 app.post("/signup", async(req, res)=>{
     const {username, password, instrument} = req.body;
     console.log("username: ", username);
@@ -96,6 +110,12 @@ app.post("/signup", async(req, res)=>{
     }
 });
 
+
+/**
+ * Handles GET requests to the /search-songs endpoint.
+ * Requires a 'query' parameter in the request to perform a search.
+ * It calls a scraping function that searches for songs based on the query and returns the results.
+ */
 app.get('/search-songs', async (req, res) => {
     const { query } = req.query;
     if (!query) {
@@ -106,6 +126,11 @@ app.get('/search-songs', async (req, res) => {
 });
 
 
+/**
+ * Handles POST requests to the /api/scrape endpoint.
+ * Expects a 'songUrl' in the request body to scrape additional song data from a specific URL.
+ * If successful, it returns the scraped data; otherwise, it handles errors gracefully by returning a status message.
+ */
 app.post('/api/scrape', async (req, res) => {
     const { songUrl } = req.body;
 
@@ -121,6 +146,7 @@ app.post('/api/scrape', async (req, res) => {
         res.status(500).json({ error: 'Failed to scrape the song' });
     }
 });
+
 
 server.listen(5000, '0.0.0.0', ()=>{
     console.log("Socket.IO server running on http://localhost:5000");

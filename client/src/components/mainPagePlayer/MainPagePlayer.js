@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';  // Import Socket.IO client
+import io from 'socket.io-client';
 
-// Connect to the Socket.IO server running at localhost:5000
 const socket = io('http://192.168.1.102:5000');
 
+
+/**
+ * MainPagePlayer is a React component for the main player interface of the music app.
+ * It handles user authentication state, displays different views based on whether the user
+ * is logged in, and manages real-time interactions with the server using Socket.IO.
+ */
 const MainPagePlayer = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');

@@ -8,6 +8,13 @@ import './Live.css';
 // Connect to the Socket.IO server
 const socket = io('http://192.168.1.102:5000');
 
+
+/**
+ * Live is a React component that displays the currently selected song for live performance or viewing.
+ * It integrates with a Socket.IO server to receive commands and sends user role-based navigation commands.
+ * The component adjusts the display based on the user's role ('admin'/player or 'singer') and provides functionality 
+ * for scrolling lyrics, handling song exit, and adapting text direction based on content language (e.g., RTL for Hebrew).
+ */
 const Live = () => {
     const [song, setSong] = useState(null);
     const navigate = useNavigate();
@@ -53,7 +60,6 @@ const Live = () => {
         };
     }, [navigate]);
 
-    // Automatic scrolling
     useEffect(() => {
         let scrollInterval;
         if (scrolling) {

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * AdminLogin is a React component for rendering an admin login form.
+ * This component handles the authentication of an admin user based on hardcoded credentials.
+ * Upon successful authentication, it stores the admin status in localStorage and navigates to the admin dashboard.
+ * If the authentication fails, it displays an error message.
+ */
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,11 +23,9 @@ const AdminLogin = () => {
         };
 
         if (username === adminCredentials.username && password === adminCredentials.password) {
-            // Successful login, store admin login state in localStorage
             localStorage.setItem('isAdminLoggedIn', true);
             localStorage.setItem('user', JSON.stringify({ username: adminCredentials.username, role: adminCredentials.role }));
 
-            // Redirect to the admin dashboard
             navigate('/admin');
         } else {
             setErrorMessage('Invalid username or password');

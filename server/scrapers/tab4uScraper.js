@@ -1,7 +1,23 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-// Function to scrape the song data (lyrics and chords) and count spaces
+
+/**
+ * Scrapes song data including lyrics and chords from a specified URL.
+ * The function makes an HTTP request to retrieve the HTML content of the song page,
+ * parses it using Cheerio to extract lyrics and chords, and formats them into a structured array.
+ *
+ * @param {string} url - The URL of the song page to scrape.
+ * @returns {Array|Object} An array of song data objects where each object represents a verse or a line with corresponding chords and lyrics,
+ *                          or an object with a message if no lyrics or chords are found, or an error message if an exception occurs.
+ *
+ * Each song data object includes:
+ * - chords: A string representing the chords aligned with the lyrics based on their position in the HTML content.
+ * - lyrics: A string of the lyrics corresponding to the chords.
+ *
+ * The function navigates through each table row assumed to contain chords data and finds the next row as lyrics.
+ * It calculates spaces to align chords with lyrics based on their HTML structure and spacing.
+ */
 const scrapeSongData = async (url) => {
     try {
         const { data } = await axios.get(url);
@@ -10,50 +26,39 @@ const scrapeSongData = async (url) => {
         let songData = [];
         let currentVerse = [];
 
-        // Iterate over each row in the table (lyrics and chords)
         $('table tbody tr').each((i, row) => {
             const chordsHtml = $(row).find('td.chords_en, td.chords').html() || '';
 
-            // Split around the <span> tags to extract the content before and after each chord
             let chordsLine = '';
             let lastIndex = 0;
 
-            // Go through each chord <span> element
             $(row).find('td.chords_en span, td.chords span').each((i, el) => {
-                const chordText = $(el).text().trim();  // Extract chord name
-                const chordHtml = $.html(el);  // Full HTML of the chord
+                const chordText = $(el).text().trim();
+                const chordHtml = $.html(el);
 
-                // Find where the <span> starts and count spaces before it
                 const index = chordsHtml.indexOf(chordHtml, lastIndex);
                 const spacesBefore = chordsHtml.substring(lastIndex, index).replace(/&nbsp;/g, ' ').length;
 
-                // Add the correct number of spaces before the chord
                 chordsLine += ' '.repeat(spacesBefore) + chordText;
-
-                // Update lastIndex to the end of this <span>
                 lastIndex = index + chordHtml.length;
             });
 
-            // Add remaining spaces after the last chord
             const remainingSpaces = chordsHtml.substring(lastIndex).replace(/&nbsp;/g, ' ').length;
             chordsLine += ' '.repeat(remainingSpaces);
 
-            // Get lyrics with preserved spaces
             const nextRow = $(row).next();
             if (nextRow.length) {
                 const lyricsLine = nextRow.find('td.song').html()?.replace(/&nbsp;/g, ' ').trim() || '';
-                // If there is either chords or lyrics, add them to the current verse
+    
                 if (chordsLine || lyricsLine) {
                     const lineObj = {
-                        chords: chordsLine,  // Chords line with correct spacing
-                        lyrics: lyricsLine   // Lyrics line with original spacing
+                        chords: chordsLine,  
+                        lyrics: lyricsLine
                     };
                     currentVerse.push(lineObj);
                 }
             }
             
-
-            // If a verse (group of lines) is complete, add it to songData
             if (currentVerse.length > 0) {
                 songData.push(currentVerse);
                 currentVerse = [];

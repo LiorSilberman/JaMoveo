@@ -4,8 +4,15 @@ import io from 'socket.io-client';
 import './AdminResults.css';
 import axios from 'axios';
 
-const socket = io('http://localhost:5000');
+const socket = io('http://192.168.1.102:5000');
 
+
+/**
+ * AdminResults is a React component that displays a list of song search results.
+ * It retrieves the list of songs from the navigation state, provided by the adminPage.
+ * Each song can be clicked to initiate a scraping request to the backend for additional song data,
+ * and once the data is fetched, it emits a socket event with the complete song data and navigates to a live song display page.
+ */
 const AdminResults = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -13,8 +20,7 @@ const AdminResults = () => {
 
     const handleSongClick = async (song) => {
         try {
-            // Send the request to the correct backend URL with the song URL
-            const response = await axios.post('http://localhost:5000/api/scrape', { songUrl: song.url });
+            const response = await axios.post('http://192.168.1.102:5000/api/scrape', { songUrl: song.url });
             const songData = response.data;
 
             const fullSongData = {
@@ -25,7 +31,7 @@ const AdminResults = () => {
 
             socket.emit('adminSongSelected', fullSongData); 
             navigate('/live', { state: { song: fullSongData } });
-            
+
         } catch (error) {
             console.error('Error scraping song:', error);
         }

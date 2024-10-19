@@ -1,7 +1,22 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-// Function to scrape songs from the search results page
+
+/**
+ * Scrapes songs from Tab4U based on a provided search query.
+ * The function constructs a search URL, makes an HTTP request to retrieve the page content,
+ * then uses Cheerio to parse and extract song information from the HTML.
+ * It captures each song's title, artist name, image URL, and details URL.
+ * 
+ * @param {string} searchQuery - The user's search input used to query songs.
+ * @returns {Array|Object} An array of song objects if songs are found, otherwise returns an object with a message indicating no songs were found.
+ * Each song object contains:
+ *   - title: The title of the song.
+ *   - artist: The artist of the song.
+ *   - image: A URL to the song's image.
+ *   - url: A URL to detailed song information on Tab4U.
+ * If an error occurs during the scraping process, returns an object with an error message.
+ */
 const scrapeSongs = async (searchQuery) => {
     try {
         const url = `https://www.tab4u.com/resultsSimple?tab=songs&q=${encodeURIComponent(searchQuery)}`;
@@ -9,7 +24,6 @@ const scrapeSongs = async (searchQuery) => {
         const $ = cheerio.load(data);
         let songs = [];
 
-        // Scrape each song entry from the table
         $('table.tbl_type5 tbody tr').each((i, row) => {
             const songRow = $(row).find('.ruSongLink');
             if (songRow.length) {
@@ -19,17 +33,14 @@ const scrapeSongs = async (searchQuery) => {
                 const artistName = songRow.find('.aNameI19').text().trim();
                 let imageUrl = songRow.find('.ruArtPhoto').css('background-image');
                 
-                // If an image URL is found in the background-image, extract and clean it
                 if (imageUrl) {
                     imageUrl = imageUrl.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-                    // Handle cases where the image URL is relative, prepend the base URL if needed
+                
                     if (!imageUrl.startsWith('http')) {
                         imageUrl = `https://www.tab4u.com${imageUrl}`;
                     }
-                } else {
-                    imageUrl = 'default-image.jpg';  // Fallback to a default image if none found
                 }
-
+                
                 if (songTitle && artistName) {
                     songs.push({
                         title: songTitle,

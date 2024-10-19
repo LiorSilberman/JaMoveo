@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './Signup.css';  // Import the CSS file for styling
+import './Signup.css';
 
+
+/**
+ * Signup is a React component that provides an interface for users to register an account in the application.
+ * It collects user data through a form, sends it to the backend server for registration, and handles the server's responses.
+ * The component allows users to enter their username, password, and an instrument they play.
+ */
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: '',

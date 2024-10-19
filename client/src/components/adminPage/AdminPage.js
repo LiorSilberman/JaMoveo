@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
+/**
+ * AdminPage is a React component that serves as the administrative interface for song searches.
+ * It checks if an admin is logged in on component mount and redirects to the admin login page if not.
+ * This component provides an input field for searching songs, initiating an
+ * API call to fetch results which are then passed via navigation state to the results page.
+ */
 const AdminPage = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');

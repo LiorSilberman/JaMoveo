@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';  // Import the CSS file for styling
+import './Login.css';
 
+
+/**
+ * Login is a React component that provides a user interface for logging into the application.
+ * It handles user input for username and password, sends these credentials to a backend server,
+ * and handles the server's response by either storing user data in localStorage and redirecting
+ * to the home page or displaying error messages for authentication issues.
+ */
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

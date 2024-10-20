@@ -1,5 +1,5 @@
 const express = require("express");
-const users = require("./mongo");
+const { User, Admin } = require("./mongo");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
 const app = express();
@@ -24,10 +24,8 @@ const io = new Server(server, {
 app.use(cors());
 
 io.on('connection', (socket) => {
-    console.log('A client connected', socket.id);
-
-    socket.on('adminSongSelected', (song) => {
-        io.emit('songSelected', song);
+    socket.on('adminSongSelected', (data) => {
+        socket.broadcast.emit('songSelected', data);
     });
 
     socket.on('quitSong', (role) => {
@@ -38,11 +36,6 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
     });
-});
-
-
-app.get("/", (req, res)=>{
-    res.json({message:"check"});
 });
 
 
@@ -57,7 +50,7 @@ app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = await users.findOne({ username: username });
+        const user = await User.findOne({ username: username });
 
         if (user) {
             const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -84,11 +77,10 @@ app.post("/login", async (req, res) => {
  */
 app.post("/signup", async(req, res)=>{
     const {username, password, instrument} = req.body;
-    console.log("username: ", username);
     const data = {username:username, password:password, instrument:instrument};
 
     try{
-        const checkUsername = await users.findOne({ username:username });
+        const checkUsername = await User.findOne({ username:username });
 
         if (checkUsername){
             res.json("exist");
@@ -110,6 +102,49 @@ app.post("/signup", async(req, res)=>{
     }
 });
 
+
+app.post("/admin/login", async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const admin = await Admin.findOne({ username: username });
+        if (admin) {
+            const isPasswordCorrect = await bcrypt.compare(password, admin.password);
+            if (isPasswordCorrect) {
+                res.json({ message: "login successful", username: admin.username, role: admin.role, instrument: admin.instrument });
+            } else {
+                res.json({ message: "incorrect password" });
+            }
+        } else {
+            res.json({ message: "admin not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "error during login" });
+    }
+});
+
+
+app.post("/admin/signup", async (req, res) => {
+    const { username, password, instrument, role = 'admin' } = req.body;
+
+    try {
+        const existingAdmin = await Admin.findOne({ username: username });
+        if (existingAdmin) {
+            res.status(409).json({ message: "admin already exists" });
+        } else {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const newAdmin = new Admin({
+                username,
+                password: hashedPassword,
+                instrument,
+                role
+            });
+            await newAdmin.save();
+            res.status(201).json({ message: "admin created" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "error creating admin" });
+    }
+});
 
 /**
  * Handles GET requests to the /search-songs endpoint.

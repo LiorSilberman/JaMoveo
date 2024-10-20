@@ -6,7 +6,7 @@ import axios from 'axios';
 import './AdminResults.css';
 
 
-const socket = io('https://jamoveo-production-ddb9.up.railway.app');
+const socket = io(`${process.env.REACT_APP_API_URL}`);
 
 
 /**
@@ -30,7 +30,7 @@ const AdminResults = () => {
 
     const handleSongClick = async (song) => {
         try {
-            const response = await axios.post('https://jamoveo-production-ddb9.up.railway.app/api/scrape', { songUrl: song.url });
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/scrape`, { songUrl: song.url });
             const songData = response.data;
 
             const fullSongData = {

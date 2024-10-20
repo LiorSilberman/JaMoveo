@@ -26,7 +26,7 @@ const AdminPage = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.get(`https://jamoveo-production-ddb9.up.railway.app/search-songs?query=${searchQuery}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/search-songs?query=${searchQuery}`);
             
             if (response.data.message === "No songs found") {
                 setErrorMessage('No results found for your query.');

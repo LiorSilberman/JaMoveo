@@ -27,7 +27,7 @@ const Live = () => {
 
 
     useEffect(() => {
-        const newSocket = io('https://jamoveo-production-ddb9.up.railway.app');
+        const newSocket = io(`${process.env.REACT_APP_API_URL}`);
         setSocket(newSocket);
 
         return () => {

@@ -22,7 +22,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://jamoveo-production-ddb9.up.railway.app/login', {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
                 username: username,
                 password: password
             });

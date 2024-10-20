@@ -19,7 +19,7 @@ const MainPagePlayer = () => {
 
     useEffect(() => {
         // Establish socket connection when the component mounts
-        const newSocket = io('https://jamoveo-production-ddb9.up.railway.app');
+        const newSocket = io(`${process.env.REACT_APP_API_URL}`);
         setSocket(newSocket);
 
         return () => {

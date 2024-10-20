@@ -6,7 +6,7 @@ import axios from 'axios';
 import './AdminResults.css';
 
 
-const socket = io('http://192.168.1.102:5000');
+const socket = io('https://jamoveo-production-ddb9.up.railway.app');
 
 
 /**

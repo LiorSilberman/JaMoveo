@@ -27,7 +27,7 @@ const Live = () => {
 
 
     useEffect(() => {
-        const newSocket = io('http://192.168.1.102:5000');
+        const newSocket = io('https://jamoveo-production-ddb9.up.railway.app');
         setSocket(newSocket);
 
         return () => {

@@ -28,7 +28,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/signup', formData);
+      const response = await axios.post('https://jamoveo-production-ddb9.up.railway.app/signup', formData);
       if (response.data === 'exist') {
         setErrorMessage('User already exists');
       } else if (response.data === 'user created') {

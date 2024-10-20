@@ -30,6 +30,9 @@ body {
     text-align: right;
 }
 
+.rtl .song-lyrics .song-chords{
+    font-size: 1.3em;
+}
 
 .rtl .song-artist {
     margin-left: 0;
@@ -228,7 +231,7 @@ body {
 
     .song-chords,
     .song-lyrics {
-        font-size: 0.8em;
+        font-size: 1em;
     }
 
     .scroll-toggle,

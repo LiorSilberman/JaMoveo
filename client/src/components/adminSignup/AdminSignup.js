@@ -29,7 +29,7 @@ const AdminSignup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://jamoveo-production-ddb9.up.railway.app/admin/signup', formData);
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/admin/signup`, formData);
             if (response.data.message === 'admin created') {
                 navigate('/admin/login');
             } else {

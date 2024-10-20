@@ -193,19 +193,14 @@ body {
 }
 
 .scroll-speed-btn {
-    padding: 8px;
-    margin: 0 5px;
-    font-size: 16px; /* Adjust size if necessary */
-    background-color: #4CAF50; /* Consistent theme color */
+    direction: ltr;
+    font-size: 16px;
     color: white;
     border: none;
-    border-radius: 50%; /* Circular buttons */
+    border-radius: 50%;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px; /* Fixed width */
-    height: 40px; /* Fixed height */
+    width: 40px;
+    height: 40px;
     transition: background-color 0.3s;
 }
 

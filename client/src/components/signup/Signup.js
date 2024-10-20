@@ -69,15 +69,22 @@ const Signup = () => {
         </div>
         <div className="input-group">
           <label htmlFor="instrument">Instrument</label>
-          <input
-            type="text"
+          <select
+            id="instrument"
             name="instrument"
-            placeholder="Instrument"
             value={formData.instrument}
             onChange={handleChange}
-            id="instrument"
             required
-          />
+          >
+            <option value="">Select your role</option>
+            <option value="singer">Singer</option>
+            <option value="drums">Drums</option>
+            <option value="guitar">Guitar</option>
+            <option value="bass">Bass</option>
+            <option value="saxophone">Saxophone</option>
+            <option value="keyboards">Keyboards</option>
+            <option value="other">Other</option>
+          </select>
         </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit" className="submit-btn">Sign Up</button>

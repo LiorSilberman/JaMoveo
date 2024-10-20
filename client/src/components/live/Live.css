@@ -192,6 +192,35 @@ body {
     }
 }
 
+.scroll-speed-btn {
+    padding: 8px;
+    margin: 0 5px;
+    font-size: 16px; /* Adjust size if necessary */
+    background-color: #4CAF50; /* Consistent theme color */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Circular buttons */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    transition: background-color 0.3s;
+}
+
+.scroll-speed-btn:hover {
+    background-color: #43A047; /* Darker green on hover */
+}
+
+.floating-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
 /* Extra small screens (max-width: 400px) */
 @media (max-width: 400px) {
     .song-title-artist h2 {
@@ -218,3 +247,4 @@ body {
         font-size: 1em;
     }
 }
+

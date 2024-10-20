@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
 
@@ -15,6 +16,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -24,16 +26,13 @@ const Login = () => {
                 username: username,
                 password: password
             });
-            console.log(response.data);
+
             if (response.data['message'] === 'login successful') {
-                localStorage.setItem('user', JSON.stringify({
-                    username: response.data.username,
-                    role: response.data.role
-                }));
+                login({ username: response.data.username, instrument: response.data.role });
                 navigate('/', { state: { id: username } });
-            } else if (response.data['message'] === 'incorrect password') {
+            } else if (response.data === 'incorrect password') {
                 setErrorMessage('Incorrect password, please try again.');
-            } else if (response.data['message'] === 'user not found') {
+            } else if (response.data === 'user not found') {
                 setErrorMessage('User not found. Please check your username.');
             }
         } catch (error) {

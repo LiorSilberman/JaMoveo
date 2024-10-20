@@ -1,59 +1,161 @@
+/* Container for the signup form, centers the form and provides a background */
 .signup-container {
     width: 100%;
     max-width: 400px;
-    margin: 0 auto;
+    margin: 80px auto;
     padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
 }
 
+/* Styles for headers within the signup form */
 h2 {
+    color: #2c3e50;
     text-align: center;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin-bottom: 20px;
-    color: #333;
 }
 
+/* Grouping for label and input field styling */
 .input-group {
     margin-bottom: 15px;
 }
 
-.input-group label {
+label {
     display: block;
-    font-weight: bold;
     margin-bottom: 5px;
+    color: #333;
+    font-size: 16px;
 }
 
-.input-group input {
+/* Input fields styling */
+input[type="text"], input[type="password"] {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
+    font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
+    box-sizing: border-box; /* Includes padding and border in width and height */
 }
 
+/* Error message styling */
 .error-message {
     color: red;
-    text-align: center;
+    font-size: 14px;
+    margin: 5px 0;
 }
 
-.submit-btn, .redirect-btn {
+/* Submit button styling */
+.submit-btn {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     font-size: 16px;
-    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.submit-btn:hover, .redirect-btn:hover {
+.submit-btn:hover {
     background-color: #45a049;
 }
 
+/* Redirect section at the bottom of the form */
 .login-redirect {
     text-align: center;
     margin-top: 20px;
 }
+
+.login-redirect p {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.redirect-btn {
+    background: none;
+    color: #1a73e8;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.redirect-btn:hover {
+    color: #0f5dbb;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    box-sizing: border-box; 
+    cursor: pointer; 
+}
+
+/* Styles for select dropdown on hover and focus for better user experience */
+select:hover, select:focus {
+    border-color: #999; 
+    outline: none; 
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+    .signup-container {
+      width: 90%;
+      margin: 40px auto;
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 1.4rem;
+    }
+  
+    label {
+      font-size: 14px;
+    }
+  
+    input[type="text"], input[type="password"] {
+      padding: 10px; 
+      font-size: 16px; 
+    }
+  
+    .submit-btn, .redirect-btn {
+      font-size: 16px;
+    }
+  
+    .error-message {
+      font-size: 13px; 
+    }
+
+    select {
+        padding: 10px;
+        font-size: 16px; 
+    }
+  }
+  
+  /* Further adjustments for very small devices */
+  @media (max-width: 480px) {
+    .signup-container {
+      width: 100%; 
+      margin: 20px auto; 
+      padding: 10px;
+    }
+  
+    .submit-btn {
+      padding: 12px;
+    }
+  
+    .redirect-btn {
+      font-size: 15px;
+    }
+
+    select {
+        font-size: 15px;
+    }
+  }
+  

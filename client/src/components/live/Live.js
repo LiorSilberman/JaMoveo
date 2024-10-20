@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Live.css'; 
+import { useAuth } from '../../context/AuthContext'; // Import the authentication context
 
-// Connect to the Socket.IO server
-const socket = io('http://192.168.1.102:5000');
 
 
 /**
@@ -16,74 +15,89 @@ const socket = io('http://192.168.1.102:5000');
  * for scrolling lyrics, handling song exit, and adapting text direction based on content language (e.g., RTL for Hebrew).
  */
 const Live = () => {
-    const [song, setSong] = useState(null);
+    const [socket, setSocket] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
+    const { isLoggedIn, user } = useAuth();
     const [isSingingMode, setIsSingingMode] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [scrolling, setScrolling] = useState(false);
-
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user) {
-            navigate('/login');
-        } else {
-            if (user.role === 'admin') {
-                setIsAdmin(true);
-            }
-
-            if (user.role?.toLowerCase() === 'singer') {
-                setIsSingingMode(true);
-            }
-        }
-
-        const passedSong = location.state?.song;
-        if (passedSong) {
-            setSong(passedSong);
-        }
-
-    }, [navigate, location.state?.song]);
+    const [scrollSpeed, setScrollSpeed] = useState(50); 
+    const song = location.state?.song;
 
 
     useEffect(() => {
-        socket.on('quitSong', ({ role }) => {
-            console.log('Received quit event, redirecting to main page', role);
+        const newSocket = io('http://192.168.1.102:5000');
+        setSocket(newSocket);
+
+        return () => {
+            newSocket.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate('/');
+            return;
+        }
+
+        if (user && user.role === 'admin'){
+            setIsAdmin(true);
+        }
+
+        if (user && user.instrument?.toLowerCase() === 'singer') {
+            setIsSingingMode(true);
+        }
+    }, [isLoggedIn, user, navigate]);
+
+
+    useEffect(() => {
+        if (!socket) return;
+        const handleQuitSong = ({ role }) => {
             if (role !== 'admin') {
                 navigate('/');
             } else {
                 navigate('/admin'); 
             }
-        });
-
-        return () => {
-            socket.off('quitSong');
         };
-    }, [navigate]);
+    
+        socket.on('quitSong', handleQuitSong);
+    
+        return () => {
+            socket.off('quitSong', handleQuitSong);
+        };
+    }, [navigate, socket]);
 
     useEffect(() => {
         let scrollInterval;
         if (scrolling) {
             scrollInterval = setInterval(() => {
                 window.scrollBy(0, 1);
-            }, 50);
+            }, scrollSpeed);
         }
         return () => {
             if (scrollInterval) clearInterval(scrollInterval);
         };
-    }, [scrolling]);
+    }, [scrolling, scrollSpeed]);
+
+    const adjustScrollSpeed = (increment) => {
+        setScrollSpeed(prevSpeed => Math.max(10, prevSpeed + increment));
+    };
 
     const toggleScrolling = () => {
         setScrolling(!scrolling);
     };
 
     const handleQuit = () => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            socket.emit('quitSong', user.role);
 
-        socket.emit('quitSong', user.role);
-        if (user.role === 'admin') {
-            navigate('/admin');
-        } else {
-            navigate('/');
+            // Redirect based on user role
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
         }
     };
 
@@ -94,7 +108,7 @@ const Live = () => {
 
     return (
         <div className={`live-page-container ${isSongHebrew ? 'rtl' : ''}`}>
-            <h1>Live Song Page</h1>
+            <h1>On Air: Streaming Live Beats and Tunes</h1>
             {song ? (
                 <div className="song-container">
                     <div className="song-title-artist">
@@ -124,12 +138,16 @@ const Live = () => {
             )}
 
             <div className="floating-button-container">
-                <button
-                    className="scroll-toggle"
-                    onClick={toggleScrolling}
-                    aria-label={scrolling ? 'Pause Scrolling' : 'Start Scrolling'}
-                >
+                <button className="scroll-toggle" onClick={toggleScrolling}>
                     <FontAwesomeIcon icon={scrolling ? faPause : faPlay} />
+                </button>
+
+                {/* Scroll speed adjustment buttons with icons */}
+                <button className="scroll-speed-btn" onClick={() => adjustScrollSpeed(10)}>
+                    <FontAwesomeIcon icon={faMinus} />
+                </button>
+                <button className="scroll-speed-btn" onClick={() => adjustScrollSpeed(-10)}>
+                    <FontAwesomeIcon icon={faPlus} />
                 </button>
 
                 {isAdmin && (

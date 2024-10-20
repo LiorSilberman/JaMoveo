@@ -12,7 +12,7 @@ import './AdminPage.css';
  */
 const AdminPage = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, user, loading } = useAuth();
+    const { isLoggedIn, user } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 

@@ -22,7 +22,7 @@ const AdminLogin = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://192.168.1.102:5000/admin/login', {
+            const response = await axios.post('https://jamoveo-production-ddb9.up.railway.app/admin/login', {
                 username,
                 password
             });

@@ -30,7 +30,7 @@ const AdminResults = () => {
 
     const handleSongClick = async (song) => {
         try {
-            const response = await axios.post('http://192.168.1.102:5000/api/scrape', { songUrl: song.url });
+            const response = await axios.post('https://jamoveo-production-ddb9.up.railway.app/api/scrape', { songUrl: song.url });
             const songData = response.data;
 
             const fullSongData = {

@@ -4,6 +4,8 @@ FROM node:18
 # Set the working directory in the container
 WORKDIR /app
 
+COPY .env.production .env.development
+
 # Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
 

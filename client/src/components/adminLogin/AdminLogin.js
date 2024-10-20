@@ -1,35 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';  // Import axios to make HTTP requests
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import './AdminLogin.css';
 
-/**
- * AdminLogin is a React component for rendering an admin login form.
- * This component handles the authentication of an admin user based on hardcoded credentials.
- * Upon successful authentication, it stores the admin status in localStorage and navigates to the admin dashboard.
- * If the authentication fails, it displays an error message.
- */
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const { login, isLoggedIn, user } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    useEffect(() => {
+        if (isLoggedIn && user?.role === 'admin'){
+            navigate('/admin');
+        }
+    });
+
+
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        const adminCredentials = {
-            username: 'admin',
-            password: 'admin123',
-            role: 'admin'
-        };
-
-        if (username === adminCredentials.username && password === adminCredentials.password) {
-            localStorage.setItem('isAdminLoggedIn', true);
-            localStorage.setItem('user', JSON.stringify({ username: adminCredentials.username, role: adminCredentials.role }));
-
-            navigate('/admin');
-        } else {
-            setErrorMessage('Invalid username or password');
+        try {
+            const response = await axios.post('http://192.168.1.102:5000/admin/login', {
+                username,
+                password
+            });
+            if (response.data.message === 'login successful') {
+                login({ username: response.data.username, role: response.data.role, instrument: response.data.instrument });
+                navigate('/admin');
+            } else {
+                setErrorMessage(response.data.message || 'Invalid login attempt');
+            }
+        } catch (error) {
+            setErrorMessage('Login failed. Please check your network and try again.');
         }
+    };
+
+    const handleNavigateToSignup = () => {
+        navigate('/admin/signup');
     };
 
     return (
@@ -58,6 +67,7 @@ const AdminLogin = () => {
                 </div>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <button type="submit" className="login-btn">Login</button>
+                <p className="signup-link" onClick={handleNavigateToSignup}>Don't have an admin account? Sign up</p>
             </form>
         </div>
     );

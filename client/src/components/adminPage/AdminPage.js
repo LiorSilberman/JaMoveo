@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { useAuth } from '../../context/AuthContext';
+import './AdminPage.css';
 
 /**
  * AdminPage is a React component that serves as the administrative interface for song searches.
@@ -11,19 +12,15 @@ import axios from 'axios';
  */
 const AdminPage = () => {
     const navigate = useNavigate();
+    const { isLoggedIn, user, loading } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
-        if (!isAdminLoggedIn) {
-            navigate('/admin-login');
+        if (!isLoggedIn || user?.role !== 'admin') {
+            navigate('/admin/login');
         }
-    }, [navigate]);
-
-    const handleLogout = () => {
-        localStorage.removeItem('isAdminLoggedIn');
-        navigate('/admin-login'); 
-    };
+    }, [isLoggedIn, user, navigate]);
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -31,9 +28,12 @@ const AdminPage = () => {
         try {
             const response = await axios.get(`http://192.168.1.102:5000/search-songs?query=${searchQuery}`);
             
-            if (response.data) {
+            if (response.data.message === "No songs found") {
+                setErrorMessage('No results found for your query.');
+            }else{
                 navigate('/results', { state: { songs: response.data } });
             }
+                
         } catch (error) {
             console.error('Error fetching search results:', error);
             navigate('/results', { state: { songs: [] } });
@@ -43,8 +43,6 @@ const AdminPage = () => {
     return (
         <div className="admin-page-container">
             <h1>Search any song...</h1>
-            {/* Logout Button */}
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
 
             <form onSubmit={handleSearch} className="search-form">
                 <input
@@ -57,6 +55,7 @@ const AdminPage = () => {
                 />
                 <button type="submit" className="search-btn">Search</button>
             </form>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
     );
 };

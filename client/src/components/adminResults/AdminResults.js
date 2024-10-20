@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import './AdminResults.css';
+import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
+import './AdminResults.css';
+
 
 const socket = io('http://192.168.1.102:5000');
 
@@ -16,7 +18,15 @@ const socket = io('http://192.168.1.102:5000');
 const AdminResults = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { isLoggedIn, user } = useAuth();
     const { songs } = location.state || { songs: [] };
+
+    useEffect(() => {
+        // Redirect if not logged in or not an admin
+        if (!isLoggedIn || user?.role !== 'admin') {
+            navigate('/'); // Redirect to the main page or login page
+        }
+    }, [isLoggedIn, user, navigate]);
 
     const handleSongClick = async (song) => {
         try {
@@ -29,7 +39,7 @@ const AdminResults = () => {
                 song: songData
             };
 
-            socket.emit('adminSongSelected', fullSongData); 
+            socket.emit('adminSongSelected', fullSongData);
             navigate('/live', { state: { song: fullSongData } });
 
         } catch (error) {

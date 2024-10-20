@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import './Live.css'; 
+import './Live.css';
 import { useAuth } from '../../context/AuthContext'; // Import the authentication context
 
 
@@ -22,7 +22,7 @@ const Live = () => {
     const [isSingingMode, setIsSingingMode] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [scrolling, setScrolling] = useState(false);
-    const [scrollSpeed, setScrollSpeed] = useState(50); 
+    const [scrollSpeed, setScrollSpeed] = useState(50);
     const song = location.state?.song;
 
 
@@ -41,7 +41,7 @@ const Live = () => {
             return;
         }
 
-        if (user && user.role === 'admin'){
+        if (user && user.role === 'admin') {
             setIsAdmin(true);
         }
 
@@ -57,12 +57,12 @@ const Live = () => {
             if (role !== 'admin') {
                 navigate('/');
             } else {
-                navigate('/admin'); 
+                navigate('/admin');
             }
         };
-    
+
         socket.on('quitSong', handleQuitSong);
-    
+
         return () => {
             socket.off('quitSong', handleQuitSong);
         };
@@ -122,9 +122,19 @@ const Live = () => {
                                 {lineGroup.map((line, subIndex) => (
                                     <div key={subIndex} className="song-line">
                                         {!isSingingMode && (
-                                            <pre className="song-chords">{line.chords}</pre>
+                                            <pre
+                                                className="song-chords"
+                                                style={{ fontSize: isSongHebrew ? '1.2em' : '1em' }}
+                                            >
+                                                {line.chords}
+                                            </pre>
                                         )}
-                                        <pre className="song-lyrics">{line.lyrics}</pre>
+                                        <pre
+                                            className="song-lyrics"
+                                            style={{ fontSize: isSongHebrew ? '1.2em' : '1em' }}
+                                        >
+                                            {line.lyrics}
+                                        </pre>
                                     </div>
                                 ))}
                             </div>
@@ -142,7 +152,6 @@ const Live = () => {
                     <FontAwesomeIcon icon={scrolling ? faPause : faPlay} />
                 </button>
 
-                {/* Scroll speed adjustment buttons with icons */}
                 <button className="scroll-speed-btn" onClick={() => adjustScrollSpeed(10)}>
                     <FontAwesomeIcon icon={faMinus} />
                 </button>
@@ -157,7 +166,8 @@ const Live = () => {
                 )}
             </div>
         </div>
-    );
+    )
+
 };
 
 export default Live;

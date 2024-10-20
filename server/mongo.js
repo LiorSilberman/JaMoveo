@@ -27,15 +27,22 @@ const UserSchema = new mongoose.Schema({
     instrument: { type: String, required: true },
     });
 
-
-/**
- * Compiles the UserSchema into a Mongoose model called 'users'.
- * This model represents the 'users' collection in the database,
- * where each document will adhere to the UserSchema.
- */
-
-const users = mongoose.model('users', UserSchema);
+const User = mongoose.model('users', UserSchema);
 
 
-// Export the users model to allow other parts of the application to interact with the 'users' collection.
-module.exports = users;
+const AdminUserSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    instrument: { type: String, required: true },
+    role: { type: String, default: 'admin' },
+});
+
+const Admin = mongoose.model('Admin', AdminUserSchema);
+
+
+
+// Export the User model and Admin model to allow other parts of the application to interact with the collections.
+module.exports = {
+    User,
+    Admin
+};

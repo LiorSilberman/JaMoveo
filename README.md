@@ -63,10 +63,12 @@ These instructions will guide you through getting a copy of the project up and r
     npm start
     ```
 
-## Usage
+## Usage (Localhost)
 - Register as a new user: Visit the signup page at http://localhost:3000/signup.
 - Login: After registering, log in at http://localhost:3000/login.
-- Admin login: To register as an admin, visit http://localhost:3000/admin-login.
+- Admin Sign Up: To register as an admin, visit http://localhost:3000/admin/signup.
+- Admin login: To register as an admin, visit http://localhost:3000/admin/login.
+
 
 ### For Admin Users
 - **Create a rehearsal session:** From the admin main page, you can create a new session and begin the song search process.
@@ -75,3 +77,5 @@ These instructions will guide you through getting a copy of the project up and r
 ### For Regular Users
 - **Join a session:** Log in and stay on the main player page to view the current song's lyrics or chords as updated by the admin.
 
+
+##### If you'd like to visit the live version of the app, you can check it out at https://jamoveo.up.railway.app.

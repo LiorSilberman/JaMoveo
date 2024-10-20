@@ -1,0 +1,133 @@
+body{
+    padding-bottom: 150px;
+}
+
+/* Overall container of the login form, centers the form on the page */
+.login-container {
+    width: 100%;
+    max-width: 400px; /* Limits the width of the form to make it more manageable */
+    margin: 80px auto; /* Centers the form vertically and horizontally */
+    padding: 20px;
+    background-color: #f0f0f0; /* Light gray background for a subtle, modern look */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow for a slight depth */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  /* Styling the headers */
+  h2 {
+    color: #2c3e50; /* Dark blue for a professional look */
+    text-align: center; /* Centers the heading */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin-bottom: 20px; /* Spacing between the title and form elements */
+  }
+  
+  /* Grouping label and input field */
+  .input-group {
+    margin-bottom: 15px; /* Space between input groups */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333; /* Dark color for readability */
+    font-size: 16px;
+  }
+  
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px;
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: #ff0000; /* Red color for visibility */
+    font-size: 14px;
+    margin: 5px 0; /* Spacing for clarity */
+  }
+  
+  /* Styling the submit button */
+  .submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50; /* Stylish green color */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #45a049; /* Darker green on hover for interaction feedback */
+  }
+  
+  /* Redirect section styling */
+  .signup-redirect {
+    text-align: center; /* Centering the text */
+    margin-top: 20px;
+  }
+  
+  .signup-redirect p {
+    margin-bottom: 10px;
+    color: #666; /* Soft gray color */
+  }
+  
+  .redirect-btn {
+    background: none;
+    color: #1a73e8; /* Link-like blue color */
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .redirect-btn:hover {
+    color: #0f5dbb; /* Darker blue on hover */
+  }
+  
+
+  @media (max-width: 768px) {
+    .login-container {
+      width: 90%; /* Allows some margin on smaller screens */
+      margin: 40px auto; /* Less vertical space on small screens */
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 1.4rem; /* Slightly smaller font size for smaller screens */
+    }
+  
+    label {
+      font-size: 14px; /* Adjust label size for mobile readability */
+    }
+  
+    input[type="text"], input[type="password"] {
+      padding: 10px; /* Larger padding for easier interaction on touch devices */
+      font-size: 16px; /* Larger font size for better readability */
+    }
+  
+    .submit-btn, .redirect-btn {
+      font-size: 16px; /* Bigger font to make clicking easier */
+    }
+  
+    .error-message {
+      font-size: 13px; /* Adjust size for consistency */
+    }
+  }
+  
+  /* Optional: Add further fine-tuning for very small devices */
+  @media (max-width: 480px) {
+    .login-container {
+      width: 100%; /* Use full width for very small screens */
+      margin: 20px auto; /* Reduced margin for tight spaces */
+      padding: 10px;
+    }
+  
+    .submit-btn {
+      padding: 12px; /* Thicker button for easier interaction */
+    }
+  }

@@ -1,0 +1,94 @@
+/* Base styling for the login form container */
+.admin-login-container {
+    width: 100%;
+    max-width: 360px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Styling for the form headers */
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px; /* Larger font size for emphasis */
+}
+
+/* Form group styling for label and input alignment */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Input fields styling, focus for better UX */
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Includes padding and border in width and height */
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #4CAF50; /* Green border for focus */
+    outline: none; /* Remove default focus outline */
+}
+
+/* Error message styling for visibility */
+.error-message {
+    color: #d32f2f;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+/* Button styling for a modern and clean look */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50; /* Consistent green theme */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #43A047; /* Darker green on hover */
+}
+
+.signup-link {
+    color: #007BFF;
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+    .admin-login-container {
+        margin: 60px auto;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}

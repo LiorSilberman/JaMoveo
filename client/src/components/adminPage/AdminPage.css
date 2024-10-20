@@ -1,0 +1,64 @@
+/* Overall admin page container styling */
+.admin-page-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Heading styling for emphasis and focus */
+h1 {
+    color: #333;
+    font-size: 24px; /* Suitable size for mobile and scales well for desktop */
+}
+
+/* Form styling for modern and intuitive interaction */
+.search-form {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+    align-items: center;
+    gap: 10px; /* Space between form elements */
+    margin-top: 20px;
+}
+
+/* Input field styling */
+.search-input {
+    width: 100%; /* Full width to utilize space */
+    padding: 10px;
+    font-size: 16px; /* Mobile-friendly text size */
+    border: 2px solid #ccc; /* Subtle and stylish border */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    box-sizing: border-box; /* Include padding and border in the width */
+}
+
+/* Button styling for a compelling call to action */
+.search-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* A vibrant, attractive green */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.search-btn:hover {
+    background-color: #367c39; /* A darker green for hover effect */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .admin-page-container {
+        padding: 10px;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .search-input,
+    .search-btn {
+        width: 100%; /* Full width for better mobile usability */
+    }
+}

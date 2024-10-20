@@ -1,0 +1,94 @@
+/* Base container styling */
+.admin-signup-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Styling headers within the signup form */
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Input fields styling */
+.form-group input, .form-group select{
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+/* Error message styling */
+.error-message {
+    color: #d32f2f;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Button styling */
+.signup-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-btn:hover {
+    background-color: #43A047;
+}
+
+.login-link {
+    color: #007BFF;
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* Focus state to enhance user interaction by providing visual feedback */
+.form-group input:focus, .form-group select:focus {
+    border-color: #4CAF50; /* Change to match theme or preference */
+    outline: none; /* Removes default focus outline */
+}
+
+/* Hover effect for additional user interaction feedback */
+.form-group input:hover, .form-group select:hover {
+    border-color: #a0a0a0; /* Lighter or theme-based color for hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-signup-container {
+        margin: 40px auto;
+        padding: 15px;
+    }
+}

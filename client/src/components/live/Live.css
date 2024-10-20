@@ -1,0 +1,250 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Container Styles */
+.live-page-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    padding-bottom: 80px;
+    background-color: #ffffff;
+}
+
+.live-page-container h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+}
+
+/* RTL Styles */
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+
+.rtl .song-artist {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.rtl .floating-button-container {
+    right: auto;
+    left: 20px;
+    align-items: flex-start;
+}
+
+/* Song Title and Artist */
+.song-container {
+    margin-top: 20px;
+}
+
+.song-title-artist {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    direction: ltr;
+}
+
+.song-title-artist h2 {
+    font-size: 28px;
+    margin: 0;
+    color: #000;
+    word-break: break-word;
+}
+
+.song-artist {
+    font-size: 24px;
+    color: #666;
+    margin-left: 10px;
+    word-break: break-word;
+}
+
+
+.song-line-group {
+    margin-bottom: 15px;
+}
+
+.song-line {
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.is-singer .song-line {
+    align-items: flex-start;
+}
+
+
+.song-chords {
+    color: #007ACC;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    overflow-wrap: break-word;
+}
+
+.song-lyrics {
+    color: #000;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    overflow-wrap: break-word;
+}
+
+/* Floating Button Container */
+.floating-button-container {
+    position: fixed;
+    bottom: 5%; 
+    right: 10%;  
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1000;
+}
+
+.rtl .floating-button-container {
+    right: auto;
+    left: 20px;
+    align-items: flex-start;
+}
+
+
+.scroll-toggle,
+.quit-btn {
+    margin: 5px 0;
+    padding: 8px 12px;
+    background-color: #007ACC;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scroll-toggle:hover,
+.quit-btn:hover {
+    background-color: #005F99;
+}
+
+.quit-btn {
+    background-color: #D9534F;
+}
+
+.quit-btn:hover {
+    background-color: #C9302C;
+}
+
+/* Icon Styles */
+.scroll-toggle .svg-inline--fa,
+.quit-btn .svg-inline--fa {
+    font-size: 1.5em;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 600px) {
+    .floating-button-container {
+        bottom: 10%;
+        padding: 10px;
+    }
+
+    .song-title-artist h2 {
+        font-size: 1.5em;
+    }
+
+    .song-artist {
+        font-size: 1.2em;
+    }
+
+    .song-chords,
+    .song-lyrics {
+        font-size: 0.9em;
+    }
+
+    .scroll-toggle,
+    .quit-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .scroll-toggle .svg-inline--fa,
+    .quit-btn .svg-inline--fa {
+        font-size: 1.2em;
+    }
+}
+
+.scroll-speed-btn {
+    padding: 8px;
+    margin: 0 5px;
+    font-size: 16px; /* Adjust size if necessary */
+    background-color: #4CAF50; /* Consistent theme color */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Circular buttons */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    transition: background-color 0.3s;
+}
+
+.scroll-speed-btn:hover {
+    background-color: #43A047; /* Darker green on hover */
+}
+
+.floating-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* Extra small screens (max-width: 400px) */
+@media (max-width: 400px) {
+    .song-title-artist h2 {
+        font-size: 1.2em;
+    }
+
+    .song-artist {
+        font-size: 1em;
+    }
+
+    .song-chords,
+    .song-lyrics {
+        font-size: 0.8em;
+    }
+
+    .scroll-toggle,
+    .quit-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .scroll-toggle .svg-inline--fa,
+    .quit-btn .svg-inline--fa {
+        font-size: 1em;
+    }
+}
+

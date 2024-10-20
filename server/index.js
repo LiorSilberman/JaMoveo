@@ -93,7 +93,7 @@ app.post("/signup", async(req, res)=>{
                 instrument: instrument
             };
             
-            await users.insertMany([newUser]);
+            await User.insertMany([newUser]);
             res.json("user created");
         }
     }

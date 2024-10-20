@@ -13,6 +13,9 @@ RUN npm install
 # Copy the local code to the container's workspace
 COPY . .
 
+# Run build script with more verbose output
+RUN npm run build --verbose
+
 # Expose the port the app runs on
 EXPOSE 3000
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';  // Import axios to make HTTP requests
+import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './AdminLogin.css';
@@ -22,7 +22,7 @@ const AdminLogin = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://jamoveo-production-ddb9.up.railway.app/admin/login', {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/admin/login`, {
                 username,
                 password
             });
